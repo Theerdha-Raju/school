@@ -15,5 +15,9 @@ urlpatterns = [
     path('subjects/create/', views.subject_create, name='subject_create'),
     path('subjects/<int:pk>/update/', views.subject_update, name='subject_update'),
     path('subjects/<int:pk>/delete/', views.subject_delete, name='subject_delete'),
+    path('attendance/', views.attendance_list, name='attendance_list'),
+    path('attendance/create/', views.attendance_create, name='attendance_create'),
+    path('grades/', views.grade_list, name='grade_list'),
+    path('grades/create/', views.grade_create, name='grade_create'),
     path('signup/', views.signup, name='signup'),
 ]

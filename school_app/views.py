@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from .models import Student, Teacher, Subject
-from .forms import StudentForm, TeacherForm, SubjectForm, SignUpForm
+from .models import Student, Teacher, Subject, Attendance, Grade
+from .forms import StudentForm, TeacherForm, SubjectForm, SignUpForm, AttendanceForm, GradeForm
 
 @login_required
 def index(request):
@@ -11,6 +11,8 @@ def index(request):
         'student_count': Student.objects.count(),
         'teacher_count': Teacher.objects.count(),
         'subject_count': Subject.objects.count(),
+        'attendance_count': Attendance.objects.count(),
+        'grade_count': Grade.objects.count(),
     }
     return render(request, 'school_app/index.html', context)
 
@@ -121,6 +123,40 @@ def subject_delete(request, pk):
         subject.delete()
         return redirect('subject_list')
     return render(request, 'school_app/subject_confirm_delete.html', {'subject': subject})
+
+# Attendance Views
+@login_required
+def attendance_list(request):
+    attendances = Attendance.objects.all().order_by('-date')
+    return render(request, 'school_app/attendance_list.html', {'attendances': attendances})
+
+@login_required
+def attendance_create(request):
+    if request.method == 'POST':
+        form = AttendanceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('attendance_list')
+    else:
+        form = AttendanceForm()
+    return render(request, 'school_app/attendance_form.html', {'form': form})
+
+# Grade Views
+@login_required
+def grade_list(request):
+    grades = Grade.objects.all().order_by('-date_recorded')
+    return render(request, 'school_app/grade_list.html', {'grades': grades})
+
+@login_required
+def grade_create(request):
+    if request.method == 'POST':
+        form = GradeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('grade_list')
+    else:
+        form = GradeForm()
+    return render(request, 'school_app/grade_form.html', {'form': form})
 
 def signup(request):
     if request.method == 'POST':

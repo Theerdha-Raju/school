@@ -1,0 +1,35 @@
+{% extends 'school_app/base.html' %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 20px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05);">
+    <h2 style="margin-top: 0; color: #2d3748;">Mark Attendance</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+            {% for field in form %}
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #4a5568;">{{ field.label }}</label>
+                    {{ field }}
+                    {% for error in field.errors %}
+                        <p style="color: #e53e3e; font-size: 0.85rem; margin-top: 4px;">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+        <div style="margin-top: 30px; display: flex; gap: 15px;">
+            <button type="submit" style="padding: 10px 25px; background: #e53e3e; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">Save Record</button>
+            <a href="{% url 'attendance_list' %}" style="padding: 10px 25px; background: #edf2f7; color: #4a5568; text-decoration: none; border-radius: 6px; font-weight: 600;">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<style>
+    input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        box-sizing: border-box;
+    }
+</style>
+{% endblock %}
