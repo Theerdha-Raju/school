@@ -1,11 +1,46 @@
 {% extends 'school_app/base.html' %}
 
 {% block content %}
-  <h2>Login</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-  </form>
-  <p>Don't have an account? <a href="{% url 'signup' %}">Sign up here</a></p>
+<div style="max-width: 400px; margin: 40px auto; padding: 30px; background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+    <h2 style="text-align: center; color: #2d3748; margin-bottom: 24px;">Welcome Back</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #4a5568;">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                    <small style="display: block; color: #718096; margin-top: 4px;">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+                    <p style="color: #e53e3e; font-size: 0.875rem; margin-top: 4px;">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        
+        <button type="submit" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+            Log In
+        </button>
+    </form>
+    
+    <div style="margin-top: 24px; text-align: center; border-top: 1px solid #edf2f7; padding-top: 16px;">
+        <p style="color: #718096;">Don't have an account? <a href="{% url 'signup' %}" style="color: #667eea; text-decoration: none; font-weight: 600;">Sign up here</a></p>
+    </div>
+</div>
+
+<style>
+    input[type="text"], input[type="password"], input[type="email"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        box-sizing: border-box;
+    }
+    input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+</style>
 {% endblock %}
