@@ -2,15 +2,15 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from .models import Student, Teacher, Course
-from .forms import StudentForm, TeacherForm, CourseForm, SignUpForm
+from .models import Student, Teacher, Subject
+from .forms import StudentForm, TeacherForm, SubjectForm, SignUpForm
 
 @login_required
 def index(request):
     context = {
         'student_count': Student.objects.count(),
         'teacher_count': Teacher.objects.count(),
-        'course_count': Course.objects.count(),
+        'subject_count': Subject.objects.count(),
     }
     return render(request, 'school_app/index.html', context)
 
@@ -25,9 +25,9 @@ def teacher_list(request):
     return render(request, 'school_app/teacher_list.html', {'teachers': teachers})
 
 @login_required
-def course_list(request):
-    courses = Course.objects.all()
-    return render(request, 'school_app/course_list.html', {'courses': courses})
+def subject_list(request):
+    subjects = Subject.objects.all()
+    return render(request, 'school_app/subject_list.html', {'subjects': subjects})
 
 @login_required
 def student_create(request):
@@ -92,35 +92,35 @@ def teacher_delete(request, pk):
     return render(request, 'school_app/teacher_confirm_delete.html', {'teacher': teacher})
 
 @login_required
-def course_create(request):
+def subject_create(request):
     if request.method == 'POST':
-        form = CourseForm(request.POST)
+        form = SubjectForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('course_list')
+            return redirect('subject_list')
     else:
-        form = CourseForm()
-    return render(request, 'school_app/course_form.html', {'form': form})
+        form = SubjectForm()
+    return render(request, 'school_app/subject_form.html', {'form': form})
 
 @login_required
-def course_update(request, pk):
-    course = get_object_or_404(Course, pk=pk)
+def subject_update(request, pk):
+    subject = get_object_or_404(Subject, pk=pk)
     if request.method == 'POST':
-        form = CourseForm(request.POST, instance=course)
+        form = SubjectForm(request.POST, instance=subject)
         if form.is_valid():
             form.save()
-            return redirect('course_list')
+            return redirect('subject_list')
     else:
-        form = CourseForm(instance=course)
-    return render(request, 'school_app/course_form.html', {'form': form})
+        form = SubjectForm(instance=subject)
+    return render(request, 'school_app/subject_form.html', {'form': form})
 
 @login_required
-def course_delete(request, pk):
-    course = get_object_or_404(Course, pk=pk)
+def subject_delete(request, pk):
+    subject = get_object_or_404(Subject, pk=pk)
     if request.method == 'POST':
-        course.delete()
-        return redirect('course_list')
-    return render(request, 'school_app/course_confirm_delete.html', {'course': course})
+        subject.delete()
+        return redirect('subject_list')
+    return render(request, 'school_app/subject_confirm_delete.html', {'subject': subject})
 
 def signup(request):
     if request.method == 'POST':

@@ -2,10 +2,10 @@
 
 {% block content %}
     <h2>Confirm Deletion</h2>
-    <p>Are you sure you want to delete the course "<strong>{{ course.name }}</strong>"?</p>
+    <p>Are you sure you want to delete the subject "<strong>{{ subject.name }}</strong>"?</p>
     <form method="post">
         {% csrf_token %}
         <button type="submit" style="padding: 5px 15px; background-color: #dc3545; color: white; border: none; border-radius: 3px; cursor: pointer;">Yes, delete</button>
-        <a href="{% url 'course_list' %}" style="margin-left: 10px; color: #6c757d; text-decoration: none;">Cancel</a>
+        <a href="{% url 'subject_list' %}" style="margin-left: 10px; color: #6c757d; text-decoration: none;">Cancel</a>
     </form>
 {% endblock %}

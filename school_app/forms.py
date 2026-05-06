@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Student, Teacher, Course
+from .models import Student, Teacher, Subject
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -11,9 +11,9 @@ class SignUpForm(UserCreationForm):
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['first_name', 'last_name', 'email', 'courses']
+        fields = ['first_name', 'last_name', 'email', 'subjects']
         widgets = {
-            'courses': forms.CheckboxSelectMultiple(),
+            'subjects': forms.CheckboxSelectMultiple(),
         }
 
 class TeacherForm(forms.ModelForm):
@@ -21,7 +21,7 @@ class TeacherForm(forms.ModelForm):
         model = Teacher
         fields = ['first_name', 'last_name', 'email', 'department']
 
-class CourseForm(forms.ModelForm):
+class SubjectForm(forms.ModelForm):
     class Meta:
-        model = Course
+        model = Subject
         fields = ['name', 'code', 'description', 'teacher']

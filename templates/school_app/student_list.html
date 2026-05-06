@@ -10,7 +10,7 @@
                 <th>Last Name</th>
                 <th>Email</th>
                 <th>Enrollment Date</th>
-                <th>Courses</th>
+                <th>Subjects</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -22,10 +22,10 @@
                 <td>{{ student.email }}</td>
                 <td>{{ student.enrollment_date }}</td>
                 <td>
-                    {% for course in student.courses.all %}
-                        <span style="display: inline-block; padding: 2px 6px; background-color: #e9ecef; border-radius: 4px; margin-right: 4px; font-size: 0.85em;">{{ course.name }}</span>
+                    {% for subject in student.subjects.all %}
+                        <span style="display: inline-block; padding: 2px 6px; background-color: #e9ecef; border-radius: 4px; margin-right: 4px; font-size: 0.85em;">{{ subject.name }}</span>
                     {% empty %}
-                        <span style="color: #6c757d; font-size: 0.85em;">No courses</span>
+                        <span style="color: #6c757d; font-size: 0.85em;">No subjects</span>
                     {% endfor %}
                 </td>
                 <td>

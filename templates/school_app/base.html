@@ -49,7 +49,7 @@
         <a href="{% url 'index' %}">Home</a>
         <a href="{% url 'student_list' %}">Students</a>
         <a href="{% url 'teacher_list' %}">Teachers</a>
-        <a href="{% url 'course_list' %}">Courses</a>
+        <a href="{% url 'subject_list' %}">Subjects</a>
         {% if user.is_authenticated %}
             <span style="color: white; margin: 0 0.5rem;">Welcome, {{ user.username }}!</span>
             <form action="{% url 'logout' %}" method="post" style="display:inline;">

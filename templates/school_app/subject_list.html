@@ -1,0 +1,33 @@
+{% extends 'school_app/base.html' %}
+
+{% block content %}
+    <h2>Subjects</h2>
+    <a href="{% url 'subject_create' %}" style="display: inline-block; margin-bottom: 10px; padding: 5px 10px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 3px;">Add New Subject</a>
+    <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>Subject Name</th>
+                <th>Subject Code</th>
+                <th>Teacher</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for subject in subjects %}
+            <tr>
+                <td>{{ subject.name }}</td>
+                <td>{{ subject.code }}</td>
+                <td>{{ subject.teacher.first_name|default:"-" }} {{ subject.teacher.last_name|default:"" }}</td>
+                <td>
+                    <a href="{% url 'subject_update' subject.pk %}" style="color: blue; text-decoration: none; margin-right: 10px;">Edit</a>
+                    <a href="{% url 'subject_delete' subject.pk %}" style="color: red; text-decoration: none;">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No subjects found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
