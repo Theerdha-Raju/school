@@ -11,10 +11,7 @@ class SignUpForm(UserCreationForm):
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['first_name', 'last_name', 'email', 'subjects']
-        widgets = {
-            'subjects': forms.CheckboxSelectMultiple(),
-        }
+        fields = ['first_name', 'last_name', 'email']
 
 class TeacherForm(forms.ModelForm):
     class Meta:
