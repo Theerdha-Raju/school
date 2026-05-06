@@ -1,11 +1,78 @@
 {% extends 'school_app/base.html' %}
 
 {% block content %}
-    <h2>Dashboard</h2>
-    <p>Welcome to the School Management System. Use the navigation menu to manage students, teachers, and courses.</p>
-    <ul>
-        <li><strong>Total Students:</strong> {{ student_count }}</li>
-        <li><strong>Total Teachers:</strong> {{ teacher_count }}</li>
-        <li><strong>Total Subjects:</strong> {{ subject_count }}</li>
-    </ul>
+<div style="padding: 20px;">
+    <div style="margin-bottom: 30px;">
+        <h2 style="color: #2d3748; margin-bottom: 8px;">Welcome back, {{ user.username }}!</h2>
+        <p style="color: #718096; font-size: 1.1rem;">Here is what's happening in your school today.</p>
+    </div>
+
+    <!-- Stats Grid -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 40px;">
+        <!-- Students Card -->
+        <div style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-left: 5px solid #4c51bf;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <p style="color: #718096; margin-bottom: 4px; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em;">Total Students</p>
+                    <h3 style="font-size: 2rem; color: #2d3748; margin: 0;">{{ student_count }}</h3>
+                </div>
+                <div style="background: #ebf4ff; padding: 12px; border-radius: 50%;">
+                    <i class="fas fa-user-graduate" style="color: #4c51bf; font-size: 1.5rem;"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Teachers Card -->
+        <div style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-left: 5px solid #38a169;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <p style="color: #718096; margin-bottom: 4px; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em;">Total Teachers</p>
+                    <h3 style="font-size: 2rem; color: #2d3748; margin: 0;">{{ teacher_count }}</h3>
+                </div>
+                <div style="background: #f0fff4; padding: 12px; border-radius: 50%;">
+                    <i class="fas fa-chalkboard-teacher" style="color: #38a169; font-size: 1.5rem;"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subjects Card -->
+        <div style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-left: 5px solid #d69e2e;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <p style="color: #718096; margin-bottom: 4px; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em;">Total Subjects</p>
+                    <h3 style="font-size: 2rem; color: #2d3748; margin: 0;">{{ subject_count }}</h3>
+                </div>
+                <div style="background: #fffff0; padding: 12px; border-radius: 50%;">
+                    <i class="fas fa-book" style="color: #d69e2e; font-size: 1.5rem;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05);">
+        <h4 style="color: #2d3748; margin-bottom: 20px; font-size: 1.25rem;">Quick Actions</h4>
+        <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+            <a href="{% url 'student_create' %}" style="flex: 1; min-width: 150px; padding: 15px; background: #4c51bf; color: white; text-decoration: none; border-radius: 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; transition: transform 0.2s;">
+                <i class="fas fa-plus-circle" style="font-size: 1.2rem;"></i>
+                <span>Add Student</span>
+            </a>
+            <a href="{% url 'teacher_create' %}" style="flex: 1; min-width: 150px; padding: 15px; background: #38a169; color: white; text-decoration: none; border-radius: 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; transition: transform 0.2s;">
+                <i class="fas fa-user-plus" style="font-size: 1.2rem;"></i>
+                <span>Add Teacher</span>
+            </a>
+            <a href="{% url 'subject_create' %}" style="flex: 1; min-width: 150px; padding: 15px; background: #d69e2e; color: white; text-decoration: none; border-radius: 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; transition: transform 0.2s;">
+                <i class="fas fa-folder-plus" style="font-size: 1.2rem;"></i>
+                <span>Add Subject</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    a:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+</style>
 {% endblock %}
