@@ -18,18 +18,31 @@
             text-align: center;
         }
         nav {
-            background-color: #444;
-            padding: 0.5rem;
-            text-align: center;
+            background-color: #2d3748;
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        nav a {
+        nav a, nav button {
             color: #fff;
             text-decoration: none;
-            padding: 0.5rem 1rem;
-            margin: 0 0.5rem;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.2s;
+            background-color: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
         }
-        nav a:hover {
-            background-color: #555;
+        nav a:hover, nav button:hover {
+            background-color: #4a5568;
+            transform: translateY(-1px);
+        }
+        nav .active {
+            background-color: #4c51bf;
+            border-color: #5a67d8;
         }
         .container {
             padding: 2rem;
@@ -46,19 +59,23 @@
         <h1>School Management System</h1>
     </header>
     <nav>
-        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'index' %}">Dashboard</a>
         <a href="{% url 'student_list' %}">Students</a>
         <a href="{% url 'teacher_list' %}">Teachers</a>
         <a href="{% url 'subject_list' %}">Subjects</a>
         {% if user.is_authenticated %}
-            <span style="color: white; margin: 0 0.5rem;">Welcome, {{ user.username }}!</span>
-            <form action="{% url 'logout' %}" method="post" style="display:inline;">
-                {% csrf_token %}
-                <button type="submit" style="background:none; border:none; color:white; cursor:pointer; padding: 0.5rem 1rem; font-size: 16px; text-decoration: underline;">Logout</button>
-            </form>
+            <div style="margin-left: auto; display: flex; align-items: center; gap: 15px;">
+                <span style="color: #cbd5e0; font-size: 0.9rem;">Logged in as: <strong>{{ user.username }}</strong></span>
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="background-color: #e53e3e; border: none; padding: 6px 12px; font-size: 0.9rem;">Logout</button>
+                </form>
+            </div>
         {% else %}
-            <a href="{% url 'login' %}">Login</a>
-            <a href="{% url 'signup' %}">Sign Up</a>
+            <div style="margin-left: auto; display: flex; gap: 10px;">
+                <a href="{% url 'login' %}" style="background-color: #4c51bf;">Login</a>
+                <a href="{% url 'signup' %}">Sign Up</a>
+            </div>
         {% endif %}
     </nav>
     <div class="container">
