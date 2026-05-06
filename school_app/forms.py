@@ -12,6 +12,9 @@ class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
         fields = ['first_name', 'last_name', 'email', 'courses']
+        widgets = {
+            'courses': forms.CheckboxSelectMultiple(),
+        }
 
 class TeacherForm(forms.ModelForm):
     class Meta:
