@@ -1,0 +1,74 @@
+{% extends 'school_app/base.html' %}
+
+{% block content %}
+<div style="padding: 20px;">
+    <div style="margin-bottom: 30px;">
+        <h2 style="color: #2d3748; margin-bottom: 8px;">Student Dashboard</h2>
+        <p style="color: #718096; font-size: 1.1rem;">Welcome, {{ student.first_name }} {{ student.last_name }}. Here is your academic progress.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+        <!-- My Grades -->
+        <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-top: 5px solid #805ad5;">
+            <h3 style="color: #2d3748; margin-bottom: 20px;"><i class="fas fa-star" style="color: #805ad5; margin-right: 10px;"></i>My Grades</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="text-align: left; border-bottom: 2px solid #edf2f7;">
+                        <th style="padding: 12px 0;">Subject</th>
+                        <th style="padding: 12px 0;">Score</th>
+                        <th style="padding: 12px 0;">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for grade in grades %}
+                    <tr style="border-bottom: 1px solid #edf2f7;">
+                        <td style="padding: 12px 0;">{{ grade.subject.name }}</td>
+                        <td style="padding: 12px 0; font-weight: 700;">{{ grade.score }} / {{ grade.max_score }}</td>
+                        <td style="padding: 12px 0; color: #718096; font-size: 0.9rem;">{{ grade.date_recorded }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" style="padding: 20px 0; color: #a0aec0; text-align: center;">No grades recorded yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- My Attendance -->
+        <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-top: 5px solid #e53e3e;">
+            <h3 style="color: #2d3748; margin-bottom: 20px;"><i class="fas fa-calendar-check" style="color: #e53e3e; margin-right: 10px;"></i>My Attendance</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="text-align: left; border-bottom: 2px solid #edf2f7;">
+                        <th style="padding: 12px 0;">Date</th>
+                        <th style="padding: 12px 0;">Subject</th>
+                        <th style="padding: 12px 0;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for attendance in attendances %}
+                    <tr style="border-bottom: 1px solid #edf2f7;">
+                        <td style="padding: 12px 0;">{{ attendance.date }}</td>
+                        <td style="padding: 12px 0;">{{ attendance.subject.name }}</td>
+                        <td style="padding: 12px 0;">
+                            {% if attendance.status == 'Present' %}
+                                <span style="color: #38a169;">Present</span>
+                            {% elif attendance.status == 'Absent' %}
+                                <span style="color: #e53e3e;">Absent</span>
+                            {% else %}
+                                <span style="color: #d69e2e;">Late</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" style="padding: 20px 0; color: #a0aec0; text-align: center;">No attendance records yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

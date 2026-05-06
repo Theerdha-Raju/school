@@ -7,6 +7,10 @@ from .forms import StudentForm, TeacherForm, SubjectForm, SignUpForm, Attendance
 
 @login_required
 def index(request):
+    # If the logged in user is a student, redirect to their dashboard
+    if hasattr(request.user, 'student_profile'):
+        return redirect('student_dashboard')
+        
     context = {
         'student_count': Student.objects.count(),
         'teacher_count': Teacher.objects.count(),
@@ -36,7 +40,16 @@ def student_create(request):
     if request.method == 'POST':
         form = StudentForm(request.POST)
         if form.is_valid():
-            form.save()
+            student = form.save(commit=False)
+            # Create a User account for the student automatically
+            username = f"{student.first_name.lower()}.{student.last_name.lower()}"
+            # Ensure unique username
+            if User.objects.filter(username=username).exists():
+                username = f"{username}{User.objects.count()}"
+            
+            user = User.objects.create_user(username=username, email=student.email, password='password123')
+            student.user = user
+            student.save()
             return redirect('student_list')
     else:
         form = StudentForm()
@@ -157,6 +170,24 @@ def grade_create(request):
     else:
         form = GradeForm()
     return render(request, 'school_app/grade_form.html', {'form': form})
+
+# Student Dashboard View
+@login_required
+def student_dashboard(request):
+    # Ensure only students can see this
+    if not hasattr(request.user, 'student_profile'):
+        return redirect('index')
+        
+    student = request.user.student_profile
+    attendances = student.attendances.all().order_by('-date')
+    grades = student.grades.all().order_by('-date_recorded')
+    
+    context = {
+        'student': student,
+        'attendances': attendances,
+        'grades': grades,
+    }
+    return render(request, 'school_app/student_dashboard.html', context)
 
 def signup(request):
     if request.method == 'POST':

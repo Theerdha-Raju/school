@@ -60,12 +60,16 @@
         <h1>School Management System</h1>
     </header>
     <nav>
-        <a href="{% url 'index' %}">Dashboard</a>
-        <a href="{% url 'student_list' %}">Students</a>
-        <a href="{% url 'teacher_list' %}">Teachers</a>
-        <a href="{% url 'subject_list' %}">Subjects</a>
-        <a href="{% url 'attendance_list' %}">Attendance</a>
-        <a href="{% url 'grade_list' %}">Grades</a>
+        {% if user.student_profile %}
+            <a href="{% url 'student_dashboard' %}">My Dashboard</a>
+        {% else %}
+            <a href="{% url 'index' %}">Dashboard</a>
+            <a href="{% url 'student_list' %}">Students</a>
+            <a href="{% url 'teacher_list' %}">Teachers</a>
+            <a href="{% url 'subject_list' %}">Subjects</a>
+            <a href="{% url 'attendance_list' %}">Attendance</a>
+            <a href="{% url 'grade_list' %}">Grades</a>
+        {% endif %}
         {% if user.is_authenticated %}
             <div style="margin-left: auto; display: flex; align-items: center; gap: 15px;">
                 <span style="color: #cbd5e0; font-size: 0.9rem;">Logged in as: <strong>{{ user.username }}</strong></span>
