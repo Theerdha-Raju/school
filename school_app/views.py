@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 from .models import Student, Teacher, Course
 from .forms import StudentForm, TeacherForm, CourseForm
 
+@login_required
 def index(request):
     context = {
         'student_count': Student.objects.count(),
@@ -12,18 +14,22 @@ def index(request):
     }
     return render(request, 'school_app/index.html', context)
 
+@login_required
 def student_list(request):
     students = Student.objects.all()
     return render(request, 'school_app/student_list.html', {'students': students})
 
+@login_required
 def teacher_list(request):
     teachers = Teacher.objects.all()
     return render(request, 'school_app/teacher_list.html', {'teachers': teachers})
 
+@login_required
 def course_list(request):
     courses = Course.objects.all()
     return render(request, 'school_app/course_list.html', {'courses': courses})
 
+@login_required
 def student_create(request):
     if request.method == 'POST':
         form = StudentForm(request.POST)
@@ -34,6 +40,7 @@ def student_create(request):
         form = StudentForm()
     return render(request, 'school_app/student_form.html', {'form': form})
 
+@login_required
 def student_update(request, pk):
     student = get_object_or_404(Student, pk=pk)
     if request.method == 'POST':
@@ -45,6 +52,7 @@ def student_update(request, pk):
         form = StudentForm(instance=student)
     return render(request, 'school_app/student_form.html', {'form': form})
 
+@login_required
 def student_delete(request, pk):
     student = get_object_or_404(Student, pk=pk)
     if request.method == 'POST':
@@ -52,6 +60,7 @@ def student_delete(request, pk):
         return redirect('student_list')
     return render(request, 'school_app/student_confirm_delete.html', {'student': student})
 
+@login_required
 def teacher_create(request):
     if request.method == 'POST':
         form = TeacherForm(request.POST)
@@ -62,6 +71,7 @@ def teacher_create(request):
         form = TeacherForm()
     return render(request, 'school_app/teacher_form.html', {'form': form})
 
+@login_required
 def teacher_update(request, pk):
     teacher = get_object_or_404(Teacher, pk=pk)
     if request.method == 'POST':
@@ -73,6 +83,7 @@ def teacher_update(request, pk):
         form = TeacherForm(instance=teacher)
     return render(request, 'school_app/teacher_form.html', {'form': form})
 
+@login_required
 def teacher_delete(request, pk):
     teacher = get_object_or_404(Teacher, pk=pk)
     if request.method == 'POST':
@@ -80,6 +91,7 @@ def teacher_delete(request, pk):
         return redirect('teacher_list')
     return render(request, 'school_app/teacher_confirm_delete.html', {'teacher': teacher})
 
+@login_required
 def course_create(request):
     if request.method == 'POST':
         form = CourseForm(request.POST)
@@ -90,6 +102,7 @@ def course_create(request):
         form = CourseForm()
     return render(request, 'school_app/course_form.html', {'form': form})
 
+@login_required
 def course_update(request, pk):
     course = get_object_or_404(Course, pk=pk)
     if request.method == 'POST':
@@ -101,6 +114,7 @@ def course_update(request, pk):
         form = CourseForm(instance=course)
     return render(request, 'school_app/course_form.html', {'form': form})
 
+@login_required
 def course_delete(request, pk):
     course = get_object_or_404(Course, pk=pk)
     if request.method == 'POST':
