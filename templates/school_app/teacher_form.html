@@ -1,0 +1,13 @@
+{% extends 'school_app/base.html' %}
+
+{% block content %}
+    <h2>{% if form.instance.pk %}Edit Teacher{% else %}Add Teacher{% endif %}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <table style="margin-bottom: 15px;">
+            {{ form.as_table }}
+        </table>
+        <button type="submit" style="padding: 5px 15px; background-color: #28a745; color: white; border: none; border-radius: 3px; cursor: pointer;">Save</button>
+        <a href="{% url 'teacher_list' %}" style="margin-left: 10px; color: #6c757d; text-decoration: none;">Cancel</a>
+    </form>
+{% endblock %}

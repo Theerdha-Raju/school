@@ -1,0 +1,11 @@
+{% extends 'school_app/base.html' %}
+
+{% block content %}
+    <h2>Dashboard</h2>
+    <p>Welcome to the School Management System. Use the navigation menu to manage students, teachers, and courses.</p>
+    <ul>
+        <li><strong>Total Students:</strong> {{ student_count }}</li>
+        <li><strong>Total Teachers:</strong> {{ teacher_count }}</li>
+        <li><strong>Total Courses:</strong> {{ course_count }}</li>
+    </ul>
+{% endblock %}
